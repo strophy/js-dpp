@@ -39,8 +39,8 @@ jobs:
       - name: Run ESLinter
         run: npm run lint
 
-      - name: Run tests
-        run: npm run test
+#      - name: Run tests
+#        run: npm run test
 
   release:
     name: Release NPM package
@@ -74,7 +74,7 @@ jobs:
         with:
           result-encoding: string
           script: |
-            const semver = require('semver');
+            const semver = require(`${process.env.GITHUB_WORKSPACE}/node_modules/semver`);
             const tag = context.payload.release.tag_name;
             return (tag.includes('dev') ? `$(semver.major(tag)).$(semver.minor(tag))-dev` : 'latest');
 
