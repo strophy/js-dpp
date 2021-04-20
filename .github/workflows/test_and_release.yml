@@ -76,7 +76,7 @@ jobs:
           script: |
             const semver = require(`${process.env.GITHUB_WORKSPACE}/node_modules/semver`);
             const tag = context.payload.release.tag_name;
-            return (tag.includes('dev') ? `$(semver.major(tag)).$(semver.minor(tag))-dev` : 'latest');
+            return (tag.includes('dev') ? `${semver.major(tag)}.${semver.minor(tag)}-dev` : 'latest');
 
       - name: Publish NPM package
         uses: JS-DevTools/npm-publish@v1
