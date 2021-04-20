@@ -65,6 +65,9 @@ jobs:
       - name: Install NPM dependencies
         run: npm ci
 
+      - name: Install semver
+        run: npm install semver
+
       - name: Set release tag
         uses: actions/github-script@v3
         id: tag
@@ -72,8 +75,8 @@ jobs:
           result-encoding: string
           script: |
             const semver = require('semver');
-            const tag_name = context.payload.release.tag_name;
-            return (tag_name.includes('dev') ? `$(semver.major(tag_name)).$(semver.minor(tag_name))-dev` : 'latest');
+            const tag = context.payload.release.tag_name;
+            return (tag.includes('dev') ? `$(semver.major(tag)).$(semver.minor(tag))-dev` : 'latest');
 
       - name: Publish NPM package
         uses: JS-DevTools/npm-publish@v1
